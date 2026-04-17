@@ -16,3 +16,7 @@ Proyek backend perbankan modern yang dibangun dengan **NestJS**, **TypeScript**,
 - **ORM**: [Prisma](https://prisma.io)
 - **Dokumentasi**: [Swagger/OpenAPI](https://swagger.io)
 - **Testing**: [Jest](https://jestjs.io)
+
+## Deployment & Repository
+- **Railway** : milestone-4-danurenmiwijaya-production.up.railway.app
+- **GitHub** : https://github.com/Revou-FSSE-Oct25/milestone-4-DanuRenmiWijaya
