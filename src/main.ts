@@ -9,11 +9,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
-
+  
   const prismaService = app.get(PrismaService);
   app.useGlobalInterceptors(new AuditInterceptor(prismaService));
-
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   const config = new DocumentBuilder()
@@ -24,10 +22,12 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document); //http://localhost:3000/api-docs
+  SwaggerModule.setup('api-docs', app, document);
 
-  await app.listen(3000);
-  console.log(`Application is running on: ${await app.getUrl()}/api-docs`);
-
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  
+  console.log(`Application is running on port: ${port}`);
+  console.log(`Swagger docs: /api-docs`);
 }
 bootstrap();
