@@ -1,28 +1,29 @@
-# Gunakan Node.js 22 yang didukung Prisma terbaru
 FROM node:22-slim
 
-# Install pnpm secara global
+# Tambahkan OpenSSL (untuk memperbaiki prisma:warn libssl)
+RUN apt-get update -y && apt-get install -y openssl
+
 RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Copy package files
+# Salin package files
 COPY package.json pnpm-lock.yaml ./
+
+# Salin seluruh folder prisma (PENTING)
+COPY prisma ./prisma/
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy seluruh source code
+# Salin seluruh kode (termasuk src)
 COPY . .
 
-# Generate Prisma Client
+# Generate Prisma
 RUN npx prisma generate
 
-# Build project NestJS
 RUN pnpm run build
 
-# Ekspos port (Railway akan mengisi variabel PORT)
 EXPOSE 3000
 
-# Jalankan aplikasi
 CMD ["node", "dist/main"]

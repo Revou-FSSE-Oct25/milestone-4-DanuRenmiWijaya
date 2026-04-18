@@ -7,6 +7,8 @@
   "license": "UNLICENSED",
   "engines": {
   "node": ">=22.0.0"},
+  "prisma": {
+    "schema": "prisma/schema.prisma"},
   "scripts": {
     "postinstall": "prisma generate",
     "build": "pnpm prisma generate && nest build",
